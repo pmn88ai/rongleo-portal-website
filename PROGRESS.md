@@ -18,11 +18,13 @@ Status: ✅ COMPLETED
 ## TASK-045C2 — Trang /products: Grid Sản phẩm + Filter
 Status: ✅ COMPLETED
 
+## TASK-045C3 — Trang /products/[slug]: Chi tiết Sản phẩm
+Status: ✅ COMPLETED
+
 ### Da thuc hien
-- Rewrote products/page.tsx as SSR server component: fetches from Supabase (public portal_items, ordered by sort_order), passes data to client component, handles error state
-- Created ProductsClient: category filter state, separates featured/regular items, responsive grid (1-col mobile / 2-col tablet / 3-col desktop), empty state
-- Created ProductCard: thumbnail with Image/placeholder fallback, status badge with color mapping, category label, title, summary, tags (max 3), detail link + external link button
-- Created CategoryFilter: horizontal scrollable pill buttons, active highlight
+- Rewrote products/[slug]/page.tsx: SSR with generateMetadata (title+summary from Supabase), fetches item by slug + public=true, calls notFound() on error/missing
+- Created ProductDetail client component: back button, thumbnail Image, category + status badge, title, summary, tags with Tag icon, description box, conditional CTA (url → "Truy cập" external link / no url → "Hỏi về dự án" mailto), fade-in animation
+- Created not-found.tsx for /products/[slug] route: custom 404 with "Không tìm thấy sản phẩm" message and back link
 - All Button usages adapted to Base UI `render` prop
 
 ### Buoc tiep theo
