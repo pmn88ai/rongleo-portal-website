@@ -1,38 +1,49 @@
 ---HERMES-REPORT-START---
-RUN_ID: run-20260601-2141-TASK-045D2
-TASK_ID: TASK-045D2
+RUN_ID: run-20260601-2142-TASK-045D3
+TASK_ID: TASK-045D3
 STATUS: completed
-COMMIT: a8eadd2
+COMMIT: 80311b4
 
 ## Da thuc hien
-- Updated admin/layout.tsx: added AdminHeader with nav breadcrumb + Thêm item button + LogoutButton, wrapped children in container mx-auto py-8
-- Created src/components/admin/AdminHeader.tsx: breadcrumb (RongLeo / Admin), "Thêm item" button (Link to /admin/items/new), LogoutButton
-- Created src/app/api/admin/items/route.ts: GET handler with cookie auth check, Supabase admin client (SUPABASE_SERVICE_KEY) fetching all portal_items ordered by sort_order (no RLS, includes private items)
-- Rewrote src/app/admin/items/page.tsx: SSR with double auth (cookie check + redirect if not authenticated), fetches via service key, passes to AdminItemsClient
-- Created src/components/admin/AdminItemsClient.tsx: 4 stat cards (Tổng/Public/Draft/Nổi bật), items table with sort_order, title+category, status badge, featured star (fill-primary), public/draft eye icons (emerald/muted), edit button per row, empty state
-- All Button usages adapted to Base UI `render` prop
-- Build verified: npm run build passes, /admin/items is dynamic (ƒ SSR)
+- Added POST handler to src/app/api/admin/items/route.ts: auth check, insert body to portal_items, select().single() return, 201 on success, 400 on error
+- Created src/app/api/admin/items/[id]/route.ts: PATCH handler with params.id, auth check, update by id, select().single() return
+- Rewrote src/app/admin/items/new/page.tsx: SSR with cookie auth check + redirect, renders ItemForm(mode="create")
+- Rewrote src/app/admin/items/[id]/edit/page.tsx: SSR with cookie auth + Supabase service-role fetch by id, notFound() if missing, renders ItemForm(mode="edit", item)
+- Created src/components/admin/ItemForm.tsx: shared form component with:
+  - Title + auto-slug generation (NFD normalize, đ→d, strip non-alphanumeric, replace spaces with hyphens) — only in create mode
+  - Slug input (manual override)
+  - URL, thumbnail URL inputs
+  - Category Select (from ITEM_CATEGORY_OPTIONS)
+  - Status Select (from ITEM_STATUS_OPTIONS)
+  - Summary + Description textareas
+  - Tags comma-separated input → parsed to array on submit
+  - Sort order number input
+  - Public + Featured Switch toggles
+  - Error display, loading state
+  - Submit calls POST or PATCH API, redirects to /admin/items
+- Build verified: npm run build passes
 
 ## Files thay doi
-- src/app/admin/layout.tsx - updated with AdminHeader
-- src/components/admin/AdminHeader.tsx - new
-- src/app/api/admin/items/route.ts - new
-- src/app/admin/items/page.tsx - rewritten with SSR auth + Supabase
-- src/components/admin/AdminItemsClient.tsx - new
+- src/app/api/admin/items/route.ts - added POST method
+- src/app/api/admin/items/[id]/route.ts - new PATCH method
+- src/app/admin/items/new/page.tsx - rewritten with SSR + ItemForm
+- src/app/admin/items/[id]/edit/page.tsx - rewritten with SSR + ItemForm
+- src/components/admin/ItemForm.tsx - new
 - PROGRESS.md - updated
 
 ## Van de phat sinh
 - None
 
 ## Technical debt
-- /admin/items/page.tsx duplicates auth logic (cookie check + redirect) even though middleware already protects it. This is intentional as defense-in-depth for the SSR page.
-- AdminItemsClient uses useState but never modifies items — could be a plain prop. Kept as useState for future client-side mutation support.
+- Auto-slug generation uses simple Unicode normalization — might not handle all Vietnamese edge cases (e.g., "Đà Nẵng" → "da-nang" is correct, but compound characters may need more robust handling)
+- No image upload — thumbnail_url is manually entered. Future task could add upload endpoint.
 
 ## Lesson de xuat cho Hermes Memory
-- SSR pages that check cookies directly with `cookies()` from `next/headers` are automatically dynamic (ƒ) — no additional configuration needed
-- For admin pages, using SUPABASE_SERVICE_KEY with `createClient` bypasses RLS, which is needed to see private items
+- Vietnamese slug generation requires `.normalize('NFD')` then `replace(/[\u0300-\u036f]/g, '')` to strip diacritics, plus `đ/Đ → d` replacement
+- Shared ItemForm with `mode` prop avoids duplicating form logic across create/edit routes
 
 ## Buoc tiep theo cho operator
-- Verify /admin/items shows all items after login
-- Proceed to TASK-045D3: Admin create/edit item form
+- Test creating a new item via /admin/items/new
+- Test editing an existing item via /admin/items/[id]/edit
+- Proceed to TASK-045D4: Admin delete functionality
 ---HERMES-REPORT-END---

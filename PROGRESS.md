@@ -30,12 +30,17 @@ Status: ✅ COMPLETED
 ## TASK-045D3 — Admin Form: Thêm / Sửa Item
 Status: ✅ COMPLETED
 
+## TASK-045D4 — Admin Delete + Inline Toggles
+Status: ✅ COMPLETED
+
 ### Da thuc hien
 - Added POST method to /api/admin/items/route.ts: inserts new item, returns 201
 - Created /api/admin/items/[id]/route.ts: PATCH handler updates item by UUID
 - Rewrote admin/items/new/page.tsx: SSR with cookie auth check + ItemForm(mode="create")
 - Rewrote admin/items/[id]/edit/page.tsx: SSR with cookie auth + Supabase fetch by id + ItemForm(mode="edit", item=data), notFound() if missing
 - Created ItemForm shared component: all fields (title auto-slug, slug, URL, category Select, status Select, summary/description textareas, thumbnail URL, comma-separated tags, sort_order number, public/featured Switches), auto-generates slug from Vietnamese title (NFD normalize, đ→d), saves via fetch to API, redirects to /admin/items on success
+- Added DELETE to /api/admin/items/[id]/route.ts: removes item by UUID
+- Rewrote AdminItemsClient: inline toggle featured/public + delete with confirm dialog, optimistic UI updates on all actions, stats cards reflect current state after delete
 
 ### Buoc tiep theo
-- TASK-045D4: Admin delete functionality
+- TASK-045E1: User-facing features or polish (per PROGRESS.md chain)
