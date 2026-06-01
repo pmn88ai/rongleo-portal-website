@@ -24,14 +24,16 @@ Status: ✅ COMPLETED
 ## TASK-045D1 — Admin Login + Middleware Auth
 Status: ✅ COMPLETED
 
+## TASK-045D2 — Admin Dashboard: Danh sách Items + Stats
+Status: ✅ COMPLETED
+
 ### Da thuc hien
-- Created API route POST /api/admin/login: validates username/password from env, sets httpOnly cookie `admin_session` (7 day expiry, secure in production)
-- Created API route POST /api/admin/logout: deletes `admin_session` cookie
-- Created middleware.ts: protects all /admin/* routes except /admin, redirects unauthenticated to login page, Edge Runtime safe
-- Rewrote admin/page.tsx: login page with centered AdminLoginForm
-- Created admin/layout.tsx: admin-only layout wrapper with bg-muted/20
-- Created AdminLoginForm: username + password inputs, error display, loading state, redirects to /admin/items on success
-- Created LogoutButton: calls logout API, redirects to /admin
+- Updated admin/layout.tsx: added AdminHeader with nav breadcrumb + "Thêm item" button + LogoutButton
+- Created AdminHeader: breadcrumb (RongLeo / Admin), "Thêm item" button linking to /admin/items/new, LogoutButton
+- Created API GET /api/admin/items: checks auth via cookie, fetches all items with service key (no RLS), ordered by sort_order
+- Rewrote admin/items/page.tsx: SSR with double auth check (cookie + Supabase fetch using service key), passes data to AdminItemsClient
+- Created AdminItemsClient: 4 stat cards (Tổng, Public, Draft, Nổi bật), items table with sort_order, title, category, status badge, featured star, public/draft eye icons, edit button
+- All Button usages adapted to Base UI `render` prop
 
 ### Buoc tiep theo
-- TASK-045D2: Admin items list page with CRUD table
+- TASK-045D3: Admin create/edit item form
