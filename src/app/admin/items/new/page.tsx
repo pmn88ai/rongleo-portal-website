@@ -1,8 +1,16 @@
-export default function NewItemPage() {
+import { ItemForm } from '@/components/admin/ItemForm'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
+
+export default async function NewItemPage() {
+  const cookieStore = await cookies()
+  const session = cookieStore.get('admin_session')
+  if (!session || session.value !== 'authenticated') redirect('/admin')
+
   return (
-    <div>
-      <h1 className="text-2xl font-bold">New Item</h1>
-      <p className="text-muted-foreground">Create a new item</p>
+    <div className="max-w-2xl">
+      <h1 className="text-2xl font-bold mb-6">Thêm item mới</h1>
+      <ItemForm mode="create" />
     </div>
-  );
+  )
 }

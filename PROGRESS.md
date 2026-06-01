@@ -27,13 +27,15 @@ Status: ✅ COMPLETED
 ## TASK-045D2 — Admin Dashboard: Danh sách Items + Stats
 Status: ✅ COMPLETED
 
+## TASK-045D3 — Admin Form: Thêm / Sửa Item
+Status: ✅ COMPLETED
+
 ### Da thuc hien
-- Updated admin/layout.tsx: added AdminHeader with nav breadcrumb + "Thêm item" button + LogoutButton
-- Created AdminHeader: breadcrumb (RongLeo / Admin), "Thêm item" button linking to /admin/items/new, LogoutButton
-- Created API GET /api/admin/items: checks auth via cookie, fetches all items with service key (no RLS), ordered by sort_order
-- Rewrote admin/items/page.tsx: SSR with double auth check (cookie + Supabase fetch using service key), passes data to AdminItemsClient
-- Created AdminItemsClient: 4 stat cards (Tổng, Public, Draft, Nổi bật), items table with sort_order, title, category, status badge, featured star, public/draft eye icons, edit button
-- All Button usages adapted to Base UI `render` prop
+- Added POST method to /api/admin/items/route.ts: inserts new item, returns 201
+- Created /api/admin/items/[id]/route.ts: PATCH handler updates item by UUID
+- Rewrote admin/items/new/page.tsx: SSR with cookie auth check + ItemForm(mode="create")
+- Rewrote admin/items/[id]/edit/page.tsx: SSR with cookie auth + Supabase fetch by id + ItemForm(mode="edit", item=data), notFound() if missing
+- Created ItemForm shared component: all fields (title auto-slug, slug, URL, category Select, status Select, summary/description textareas, thumbnail URL, comma-separated tags, sort_order number, public/featured Switches), auto-generates slug from Vietnamese title (NFD normalize, đ→d), saves via fetch to API, redirects to /admin/items on success
 
 ### Buoc tiep theo
-- TASK-045D3: Admin create/edit item form
+- TASK-045D4: Admin delete functionality
