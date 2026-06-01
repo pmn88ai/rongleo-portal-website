@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RongLeo Portal
 
-## Getting Started
+Cổng thông tin sản phẩm cá nhân — nơi RongLeo trưng bày các dự án, sản phẩm và ý tưởng dưới dạng một bộ sưu tập sống động, hỗ trợ 3 giao diện (Light / Dark / Luxury).
 
-First, run the development server:
+## Công nghệ
+
+| Thành phần | Công nghệ |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| UI Library | shadcn/ui v4 (Base UI) |
+| CSS | Tailwind CSS v4 |
+| Animation | Framer Motion |
+| Database | Supabase (PostgreSQL) |
+| Auth | httpOnly cookie (admin) |
+| Font | Be Vietnam Pro + Inter |
+| Icons | Lucide React |
+
+## Tính năng
+
+- **3 Theme** — Light (xanh lá), Dark (xanh neon), Luxury (vàng đồng). Lưu bằng `localStorage`.
+- **Trang chủ** — Hero với headline động, 4 khối năng lực (animation stagger), Contact CTA.
+- **Products** — Grid lọc theo danh mục, SSR, badge trạng thái, thẻ nổi bật, trang chi tiết với slug + 404 tuỳ chỉnh.
+- **Admin** — Đăng nhập username/password, CRUD sản phẩm, inline toggle featured/public, xoá có xác nhận, stats dashboard.
+- **API** — RESTful endpoints cho admin CRUD, service key bypass RLS.
+- **Middleware** — Edge Runtime bảo vệ toàn bộ `/admin/*` ngoại trừ trang login.
+
+## Cấu trúc thư mục
+
+Xem [MAP.md](./MAP.md) để biết sơ đồ chi tiết.
+
+## Bắt đầu
 
 ```bash
+# Clone & cài dependencies
+npm install
+
+# Tạo file .env.local (xem .env.example)
+# Thiết lập Supabase URL + keys + admin credentials
+
+# Seed dữ liệu mẫu
+npm run seed
+
+# Chạy dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Mở [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Môi trường
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Biến | Mô tả |
+|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Anon key (public) |
+| `SUPABASE_SERVICE_KEY` | Service key (server-only) |
+| `ADMIN_USERNAME` | Tên đăng nhập admin |
+| `ADMIN_PASSWORD` | Mật khẩu admin |
+| `NEXT_PUBLIC_SITE_URL` | URL deployment |
 
-## Learn More
+## Database
 
-To learn more about Next.js, take a look at the following resources:
+Migration tại `supabase/migrations/001_create_portal_items.sql`. Bảng `portal_items` có các cột:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `id` — UUID (PK)
+- `title`, `slug` — Tiêu đề và đường dẫn
+- `url`, `summary`, `description` — Nội dung
+- `category` — Enum: AI, GIS & Đất đai, Dashboard, CRM, …
+- `status` — Enum: Ý tưởng → Hoàn thiện
+- `thumbnail_url`, `tags` — Hình ảnh & thẻ
+- `featured`, `public` — Cờ hiển thị
+- `sort_order` — Thứ tự sắp xếp
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Admin CRUD dùng `SUPABASE_SERVICE_KEY` để bypass RLS.
 
-## Deploy on Vercel
+## Admin
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Vào `/admin` → đăng nhập → dashboard `/admin/items`:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Xem thống kê (tổng, public, draft, nổi bật)
+- Lọc & chỉnh sửa inline (toggle featured/public)
+- Thêm / Sửa item với form auto-slug tiếng Việt
+- Xoá item (confirm dialog, optimistic UI)
+
+## Deploy
+
+```bash
+npm run build
+npm start
+```
+
+Biến môi trường phải được cấu hình trên nền tảng deploy (Vercel, Docker, …).
