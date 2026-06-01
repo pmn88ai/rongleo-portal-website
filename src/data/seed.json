@@ -1,23 +1,128 @@
-{
-  "products": [
-    {
-      "id": "1",
-      "name": "Sample Product",
-      "slug": "sample-product",
-      "description": "A sample product for development",
-      "price": 99.99,
-      "image_url": null,
-      "created_at": "2026-01-01T00:00:00Z"
-    }
-  ],
-  "items": [
-    {
-      "id": "1",
-      "title": "Welcome",
-      "content": "Welcome to RongLeo Portal",
-      "status": "published",
-      "created_at": "2026-01-01T00:00:00Z",
-      "updated_at": "2026-01-01T00:00:00Z"
-    }
-  ]
-}
+[
+  {
+    "title": "Hệ thống quản lý gia phả",
+    "slug": "gia-pha",
+    "url": "https://giapha.rongleo.com",
+    "summary": "Quản lý cây gia phả, quan hệ gia đình và dữ liệu dòng họ.",
+    "description": "Hệ thống web giúp lưu trữ, tìm kiếm, liên kết và trực quan hóa thông tin gia đình, phù hợp cho dòng họ lớn. Tích hợp AI để gợi ý quan hệ và tìm kiếm tự nhiên.",
+    "category": "Dữ liệu gia đình",
+    "status": "Đang phát triển",
+    "thumbnail_url": null,
+    "tags": ["Gia phả", "Dữ liệu", "AI"],
+    "featured": true,
+    "public": true,
+    "sort_order": 10
+  },
+  {
+    "title": "RongLeo Spatial — GIS cá nhân",
+    "slug": "spatial",
+    "url": "https://spatial.rongleo.com",
+    "summary": "Hệ thống GIS cá nhân: bản đồ quy hoạch, phân tích thửa đất, hồ sơ địa chính.",
+    "description": "WebGIS tích hợp bản đồ quy hoạch Việt Nam, phân tích vị trí, hồ sơ thửa đất, kết nối dữ liệu địa chính. Xây dựng trên MapLibre GL + PostGIS.",
+    "category": "GIS & Đất đai",
+    "status": "Đang phát triển",
+    "thumbnail_url": null,
+    "tags": ["GIS", "Bản đồ", "Đất đai", "Quy hoạch"],
+    "featured": true,
+    "public": true,
+    "sort_order": 20
+  },
+  {
+    "title": "Định vị thửa đất",
+    "slug": "dinh-vi-thua-dat",
+    "url": "https://land.rongleo.com",
+    "summary": "Tra cứu và định vị thửa đất từ số tờ, số thửa — hiển thị trực tiếp trên bản đồ.",
+    "description": "Công cụ tra cứu thửa đất từ dữ liệu địa chính, hiển thị polygon trên bản đồ, hỗ trợ tìm kiếm theo địa chỉ hoặc tọa độ.",
+    "category": "GIS & Đất đai",
+    "status": "Demo",
+    "thumbnail_url": null,
+    "tags": ["Đất đai", "Tra cứu", "Bản đồ"],
+    "featured": false,
+    "public": true,
+    "sort_order": 30
+  },
+  {
+    "title": "RongLeo Radar — Thị trường BĐS",
+    "slug": "radar",
+    "url": "https://radar.rongleo.com",
+    "summary": "Dashboard theo dõi thị trường bất động sản từ dữ liệu thực tế.",
+    "description": "Hệ thống thu thập, chuẩn hóa và phân tích dữ liệu bất động sản. Dashboard trực quan: xu hướng giá, phân tích khu vực, so sánh dự án.",
+    "category": "Bất động sản",
+    "status": "Đang phát triển",
+    "thumbnail_url": null,
+    "tags": ["BĐS", "Dashboard", "Dữ liệu", "Radar"],
+    "featured": true,
+    "public": true,
+    "sort_order": 40
+  },
+  {
+    "title": "RongLeo Kế Toán",
+    "slug": "ke-toan",
+    "url": "https://accounting.rongleo.com",
+    "summary": "Hệ thống kế toán kép thực chiến: nhật ký, sổ cái, báo cáo tài chính.",
+    "description": "Kế toán kép chuẩn Việt Nam với hệ thống tài khoản theo TT200/QD48, nhật ký kế toán, sổ cái, báo cáo tài chính tự động. Tích hợp AI phân tích dòng tiền.",
+    "category": "Quản lý nội bộ",
+    "status": "Hoàn thiện",
+    "thumbnail_url": null,
+    "tags": ["Kế toán", "Tài chính", "AI"],
+    "featured": false,
+    "public": true,
+    "sort_order": 50
+  },
+  {
+    "title": "AI Land Visualizer",
+    "slug": "land-viz",
+    "url": null,
+    "summary": "Trực quan hóa dữ liệu đất đai bằng AI — từ văn bản mô tả sang bản đồ tương tác.",
+    "description": "Nhập mô tả dự án đất đai bằng ngôn ngữ tự nhiên, AI phân tích và tạo bản đồ trực quan, ước lượng diện tích và giá trị.",
+    "category": "GIS & Đất đai",
+    "status": "Demo",
+    "thumbnail_url": null,
+    "tags": ["AI", "Đất đai", "Trực quan hóa"],
+    "featured": false,
+    "public": true,
+    "sort_order": 60
+  },
+  {
+    "title": "RongLeo Sale Assets",
+    "slug": "sale-assets",
+    "url": null,
+    "summary": "Quản lý tài sản bán hàng: hình ảnh, tài liệu, template cho môi giới.",
+    "description": "Hệ thống quản lý và chia sẻ tài sản bán hàng bất động sản: ảnh dự án, file PDF, template đăng bài. Tích hợp tạo post AI tự động.",
+    "category": "Bất động sản",
+    "status": "Beta",
+    "thumbnail_url": null,
+    "tags": ["Sale", "Tài sản", "BĐS", "AI"],
+    "featured": false,
+    "public": true,
+    "sort_order": 70
+  },
+  {
+    "title": "Workflow AI nội bộ",
+    "slug": "workflow-ai",
+    "url": null,
+    "summary": "Xây dựng workflow tự động hóa công việc lặp lại với AI.",
+    "description": "Thiết kế và triển khai các workflow tự động: phân loại email, trích xuất dữ liệu từ tài liệu, tổng hợp báo cáo, gửi thông báo tự động.",
+    "category": "Tự động hóa",
+    "status": "Ý tưởng",
+    "thumbnail_url": null,
+    "tags": ["AI", "Workflow", "Tự động hóa"],
+    "featured": false,
+    "public": true,
+    "sort_order": 80
+  },
+  {
+    "title": "Dashboard Dữ liệu Doanh nghiệp",
+    "slug": "dashboard-doanh-nghiep",
+    "url": null,
+    "summary": "Dashboard tổng hợp: doanh thu, chi phí, KPI — kết nối nhiều nguồn dữ liệu.",
+    "description": "Hệ thống dashboard quản trị doanh nghiệp: kết nối Google Sheet, file Excel, API ngoài. Tự động làm sạch và trực quan hóa dữ liệu. Báo cáo tự động theo tuần/tháng.",
+    "category": "Dashboard",
+    "status": "Demo",
+    "thumbnail_url": null,
+    "tags": ["Dashboard", "Dữ liệu", "KPI", "Doanh nghiệp"],
+    "featured": false,
+    "public": true,
+    "sort_order": 90
+  }
+]
