@@ -12,11 +12,15 @@ Status: ✅ COMPLETED
 ## TASK-045B2 — Theme System: 3 Chế độ + CSS Variables
 Status: ✅ COMPLETED
 
+## TASK-045C1 — Trang chủ: Hero + 4 Khối Năng Lực
+Status: ✅ COMPLETED
+
 ### Da thuc hien
-- Updated ThemeProvider: attribute="data-theme", themes={light,dark,luxury}, enableSystem=false, storageKey="rongleo-theme"
-- Rewrote globals.css: replaced oklch shadcn defaults with 3 HSL-based theme blocks (:root light, [data-theme="dark"], [data-theme="luxury"]), adapted @theme block to wrap CSS vars with hsl(), updated dark variant for data-theme attribute, added luxury button accent style
-- layout.tsx already has suppressHydrationWarning (from B1)
-- Build verified successful
+- Created HeroSection: headline "Biến dữ liệu thành công cụ hành động.", description, badge, 2 CTA buttons (Xem giải pháp → /#solutions, Xem sản phẩm mẫu → /products), fade-in animation via Framer Motion
+- Created CapabilitiesSection: 4 cards (Đất đai & GIS, AI & Tự động hóa, Dữ liệu & Dashboard, Web App thực chiến) with color-coded icons + item lists, stagger fade-in on scroll, responsive grid (2-col desktop / 1-col mobile)
+- Created ContactSection: headline + description + CTA mailto button, fade-in on scroll
+- Updated page.tsx: composed all 3 sections + solutions anchor placeholder
+- Adapted all Button usages to Base UI `render` prop instead of Radix `asChild`
 
 ### Buoc tiep theo
-- TASK-045C1: Main page hero section and feature showcase
+- TASK-045C2: Products showcase page with portal items grid

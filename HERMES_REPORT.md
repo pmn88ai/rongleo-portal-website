@@ -1,38 +1,41 @@
 ---HERMES-REPORT-START---
-RUN_ID: run-20260601-2132-TASK-045B1
-TASK_ID: TASK-045B1
+RUN_ID: run-20260601-2134-TASK-045B2
+TASK_ID: TASK-045B2
 STATUS: completed
-COMMIT: 3b05542
+COMMIT: 519ea9e
 
 ## Da thuc hien
-- Created src/components/providers/ThemeProvider.tsx wrapping next-themes (attribute="class", defaultTheme="dark", enableSystem)
-- Created src/components/layout/ThemeToggle.tsx cycling 3 themes (light → dark → luxury) with Sun/Moon/Star icons
-- Rebuilt Header (src/components/layout/Header.tsx): sticky top, scroll detection (>50px adds bg-background/80 backdrop-blur-md shadow-sm border-b), logo with Zap icon, 5 nav links (Giải pháp, Sản phẩm, Năng lực, Bài viết, Liên hệ), CTA button "Trao đổi dự án" mailto, ThemeToggle, hamburger for mobile
-- Rebuilt MobileMenu (src/components/layout/MobileMenu.tsx): fixed inset overlay with backdrop, drawer from top with rounded bottom, nav links with border separator, CTA button, body scroll lock when open
-- Rebuilt Footer (src/components/layout/Footer.tsx): 3-column grid (brand tagline / links / contact), copyright bar with moto
-- Updated root layout.tsx: integrates ThemeProvider > div.flex-col > Header + main.flex-1 + Footer
-- Fixed Base UI render prop usage (shadcn/ui v4 uses @base-ui/react, not Radix asChild)
+- Updated ThemeProvider (src/components/providers/ThemeProvider.tsx): changed from `attribute="class"`/`enableSystem`/`defaultTheme="dark"` to `attribute="data-theme"`, `themes={['light','dark','luxury']}`, `enableSystem={false}`, `storageKey="rongleo-theme"`, `defaultTheme="light"`
+- Rewrote globals.css (src/app/globals.css): replaced shadcn oklch defaults with 3 HSL-based theme blocks
+  - Light (`:root, [data-theme="light"]`): background 0 0% 98%, primary 142 72% 29% (xanh lá)
+  - Dark (`[data-theme="dark"]`): background 222 47% 8%, primary 180 60% 50% (xanh neon)
+  - Luxury (`[data-theme="luxury"]`): background 0 0% 6%, primary 43 74% 58% (vàng đồng)
+  - Adapted `@theme inline {}` block: wrapped all color references with `hsl()` since variables are now HSL components, not full oklch values
+  - Updated `@custom-variant dark` to use `data-theme="dark"` selector
+  - Added `@layer base` with border-color, background-color, color using `hsl()` wrappers
+  - Added luxury accent style: box-shadow on `.btn-primary` and `button[data-variant="default"]`
+- layout.tsx: no changes needed — already has `suppressHydrationWarning` from B1
+- Build verified: `npm run build` passes, no TypeScript errors
 
 ## Files thay doi
-- src/components/providers/ThemeProvider.tsx - new
-- src/components/layout/ThemeToggle.tsx - new
-- src/components/layout/Header.tsx - rewritten with scroll detection, nav, CTA
-- src/components/layout/MobileMenu.tsx - rewritten as drawer overlay
-- src/components/layout/Footer.tsx - rewritten with 3-column grid
-- src/app/layout.tsx - updated with ThemeProvider, Header, Footer
+- src/components/providers/ThemeProvider.tsx - updated next-themes config for 3 themes
+- src/app/globals.css - replaced with HSL-based 3-theme system
 - PROGRESS.md - updated
 
 ## Van de phat sinh
-- Base UI (shadcn/ui v4) uses `render` prop instead of Radix's `asChild` for polymorphic components — fixed in Header.tsx:20 and MobileMenu.tsx:28
+- Tailwind v4 has no tailwind.config.ts — all theme config is done via `@theme inline {}` in CSS. Had to adapt the task's Tailwind v3-style config into the v4 `@theme inline {}` block with `hsl()` wrappers
 
 ## Technical debt
-- Luxury theme has no CSS definition yet — ThemeToggle cycles to it but it currently falls back to dark. Need to add `.luxury` CSS variables in globals.css later.
+- "luxury" theme: only CSS variables are defined. A full luxury design system (gold borders, serif fonts, subtle gradients) would need additional component-level overrides beyond the scope of this task
+- `--sidebar-*` and `--chart-*` CSS variables from shadcn default theme were removed since they used oklch format. If shadcn sidebar/chart components are added later, these need re-adding
 
 ## Lesson de xuat cho Hermes Memory
-- shadcn/ui v4 uses `@base-ui/react` not `@radix-ui/react-slot` — Button polymorphic rendering uses `render={<Comp />}` prop, not `asChild`
-- Base UI `render` prop accepts a ReactElement, not `asChild={true}` pattern
+- Tailwind v4 uses `@theme inline {}` in CSS, NOT `tailwind.config.ts`. HSL CSS variables must be wrapped with `hsl()` in the `@theme` block since `--background: 0 0% 98%` is not a valid standalone color, but `hsl(0 0% 98%)` is
+- next-themes with `attribute="data-theme"` requires `@custom-variant dark (&:where([data-theme="dark"], ...))` for Tailwind v4 dark variants to work
+- Changing `storageKey` resets user's saved theme on first load — important when migrating between theme systems
 
 ## Buoc tiep theo cho operator
-- Verify header/footer appearance at desktop and mobile widths
+- Open the app and click ThemeToggle to verify 3 themes cycle correctly
+- Check localStorage key "rongleo-theme" stores the correct value
 - Proceed to TASK-045C1: Main page hero section and feature showcase
 ---HERMES-REPORT-END---
