@@ -1,41 +1,36 @@
 ---HERMES-REPORT-START---
-RUN_ID: run-20260601-2134-TASK-045B2
-TASK_ID: TASK-045B2
+RUN_ID: run-20260601-2136-TASK-045C1
+TASK_ID: TASK-045C1
 STATUS: completed
-COMMIT: 519ea9e
+COMMIT: 0b1e40d
 
 ## Da thuc hien
-- Updated ThemeProvider (src/components/providers/ThemeProvider.tsx): changed from `attribute="class"`/`enableSystem`/`defaultTheme="dark"` to `attribute="data-theme"`, `themes={['light','dark','luxury']}`, `enableSystem={false}`, `storageKey="rongleo-theme"`, `defaultTheme="light"`
-- Rewrote globals.css (src/app/globals.css): replaced shadcn oklch defaults with 3 HSL-based theme blocks
-  - Light (`:root, [data-theme="light"]`): background 0 0% 98%, primary 142 72% 29% (xanh lá)
-  - Dark (`[data-theme="dark"]`): background 222 47% 8%, primary 180 60% 50% (xanh neon)
-  - Luxury (`[data-theme="luxury"]`): background 0 0% 6%, primary 43 74% 58% (vàng đồng)
-  - Adapted `@theme inline {}` block: wrapped all color references with `hsl()` since variables are now HSL components, not full oklch values
-  - Updated `@custom-variant dark` to use `data-theme="dark"` selector
-  - Added `@layer base` with border-color, background-color, color using `hsl()` wrappers
-  - Added luxury accent style: box-shadow on `.btn-primary` and `button[data-variant="default"]`
-- layout.tsx: no changes needed — already has `suppressHydrationWarning` from B1
-- Build verified: `npm run build` passes, no TypeScript errors
+- Created src/components/portal/HeroSection.tsx: fade-in headline with highlight, badge (AI • Dữ liệu • GIS • Web App), subtitle, two CTA buttons (Xem giải pháp → /#solutions via Link, Xem sản phẩm mẫu → /products), gradient background
+- Created src/components/portal/CapabilitiesSection.tsx: 4 color-coded cards (emerald=GIS, violet=AI, blue=Dashboard, orange=Web App) with Lucide icons, item lists, stagger fade-in via whileInView, 2-col grid desktop / 1-col mobile
+- Created src/components/portal/ContactSection.tsx: centered CTA section with mailto button, fade-in on scroll
+- Updated src/app/page.tsx: composed HeroSection + #solutions anchor + CapabilitiesSection + ContactSection
+- All Button usages adapted to Base UI `render` prop (not Radix asChild)
+- Build verified: npm run build passes
 
 ## Files thay doi
-- src/components/providers/ThemeProvider.tsx - updated next-themes config for 3 themes
-- src/app/globals.css - replaced with HSL-based 3-theme system
+- src/components/portal/HeroSection.tsx - new
+- src/components/portal/CapabilitiesSection.tsx - new
+- src/components/portal/ContactSection.tsx - new
+- src/app/page.tsx - rewritten with 3 sections
 - PROGRESS.md - updated
 
 ## Van de phat sinh
-- Tailwind v4 has no tailwind.config.ts — all theme config is done via `@theme inline {}` in CSS. Had to adapt the task's Tailwind v3-style config into the v4 `@theme inline {}` block with `hsl()` wrappers
+- None
 
 ## Technical debt
-- "luxury" theme: only CSS variables are defined. A full luxury design system (gold borders, serif fonts, subtle gradients) would need additional component-level overrides beyond the scope of this task
-- `--sidebar-*` and `--chart-*` CSS variables from shadcn default theme were removed since they used oklch format. If shadcn sidebar/chart components are added later, these need re-adding
+- `#solutions` anchor is a placeholder div — no Solutions section exists yet. Will be implemented later.
+- Nav link "Bài viết" points to `#` — placeholder for future blog section.
 
 ## Lesson de xuat cho Hermes Memory
-- Tailwind v4 uses `@theme inline {}` in CSS, NOT `tailwind.config.ts`. HSL CSS variables must be wrapped with `hsl()` in the `@theme` block since `--background: 0 0% 98%` is not a valid standalone color, but `hsl(0 0% 98%)` is
-- next-themes with `attribute="data-theme"` requires `@custom-variant dark (&:where([data-theme="dark"], ...))` for Tailwind v4 dark variants to work
-- Changing `storageKey` resets user's saved theme on first load — important when migrating between theme systems
+- Base UI Button with `render={<Link />}` works for Next.js Link routing. The children are still rendered inside the cloned element.
+- Framer Motion `whileInView` with `viewport={{ once: true }}` is the preferred pattern for scroll-triggered animations in Next.js
 
 ## Buoc tiep theo cho operator
-- Open the app and click ThemeToggle to verify 3 themes cycle correctly
-- Check localStorage key "rongleo-theme" stores the correct value
-- Proceed to TASK-045C1: Main page hero section and feature showcase
+- Open the app and verify Hero animation, card layout, CTA buttons
+- Proceed to TASK-045C2: Products showcase page with portal items grid
 ---HERMES-REPORT-END---

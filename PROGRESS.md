@@ -15,12 +15,15 @@ Status: ✅ COMPLETED
 ## TASK-045C1 — Trang chủ: Hero + 4 Khối Năng Lực
 Status: ✅ COMPLETED
 
+## TASK-045C2 — Trang /products: Grid Sản phẩm + Filter
+Status: ✅ COMPLETED
+
 ### Da thuc hien
-- Created HeroSection: headline "Biến dữ liệu thành công cụ hành động.", description, badge, 2 CTA buttons (Xem giải pháp → /#solutions, Xem sản phẩm mẫu → /products), fade-in animation via Framer Motion
-- Created CapabilitiesSection: 4 cards (Đất đai & GIS, AI & Tự động hóa, Dữ liệu & Dashboard, Web App thực chiến) with color-coded icons + item lists, stagger fade-in on scroll, responsive grid (2-col desktop / 1-col mobile)
-- Created ContactSection: headline + description + CTA mailto button, fade-in on scroll
-- Updated page.tsx: composed all 3 sections + solutions anchor placeholder
-- Adapted all Button usages to Base UI `render` prop instead of Radix `asChild`
+- Rewrote products/page.tsx as SSR server component: fetches from Supabase (public portal_items, ordered by sort_order), passes data to client component, handles error state
+- Created ProductsClient: category filter state, separates featured/regular items, responsive grid (1-col mobile / 2-col tablet / 3-col desktop), empty state
+- Created ProductCard: thumbnail with Image/placeholder fallback, status badge with color mapping, category label, title, summary, tags (max 3), detail link + external link button
+- Created CategoryFilter: horizontal scrollable pill buttons, active highlight
+- All Button usages adapted to Base UI `render` prop
 
 ### Buoc tiep theo
-- TASK-045C2: Products showcase page with portal items grid
+- TASK-045D1: Admin layout and login page
