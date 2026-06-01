@@ -1,36 +1,33 @@
 ---HERMES-REPORT-START---
-RUN_ID: run-20260601-2137-TASK-045C2
-TASK_ID: TASK-045C2
+RUN_ID: run-20260601-2138-TASK-045C3
+TASK_ID: TASK-045C3
 STATUS: completed
-COMMIT: 586b825
+COMMIT: 23976d0
 
 ## Da thuc hien
-- Rewrote src/app/products/page.tsx as SSR server component: calls createClient() from @/lib/supabase/server, queries public portal_items ordered by sort_order, passes data to ProductsClient, renders error state if fetch fails
-- Created src/components/portal/ProductsClient.tsx: client component managing activeCategory state, useMemo for derived categories list (only categories present in data), separates featured/regular items, renders 3-col grid with CategoryFilter + ProductCard, empty state
-- Created src/components/portal/ProductCard.tsx: card with thumbnail (Image or letter placeholder), status badge with color-coded mapping (6 statuses), category label, title, summary (line-clamp-3), tags (max 3), detail link Button + external link Button (Base UI render prop)
-- Created src/components/portal/CategoryFilter.tsx: horizontal scrollable pill buttons, active state highlight (bg-primary / border+text-muted-foreground)
-- All Button usages adapted to Base UI `render` prop (from task spec's `asChild`)
-- Build verified: npm run build passes, /products now dynamic (ƒ SSR)
+- Rewrote src/app/products/[slug]/page.tsx: generateMetadata fetches title+summary for SEO, page fetches full item by slug + public=true, calls notFound() on error/missing
+- Created src/components/portal/ProductDetail.tsx: client component with Framer Motion fade-in, back button (Link to /products), thumbnail Image with placeholder, category + status badge (color-coded), title, summary, tag list with Tag icon, description in card, conditional CTA (url → external link button, no url → mailto button), secondary "Xem thêm sản phẩm" link
+- Created src/app/products/[slug]/not-found.tsx: custom 404 for invalid slugs with "Không tìm thấy sản phẩm" message and back-to-list button
+- All Button usages adapted to Base UI `render` prop
+- Build verified: npm run build passes
 
 ## Files thay doi
-- src/app/products/page.tsx - rewritten with Supabase SSR fetch + ProductsClient
-- src/components/portal/ProductsClient.tsx - new
-- src/components/portal/ProductCard.tsx - new
-- src/components/portal/CategoryFilter.tsx - new
+- src/app/products/[slug]/page.tsx - rewritten with SSR, generateMetadata, Supabase fetch
+- src/components/portal/ProductDetail.tsx - new
+- src/app/products/[slug]/not-found.tsx - new
 - PROGRESS.md - updated
 
 ## Van de phat sinh
 - None
 
 ## Technical debt
-- Products page currently shows nothing if Supabase env vars are not configured (no .env.local with real keys). Error state shows a generic message. Consider adding a fallback/mock mode for development.
-- STATUS_COLORS dark mode compatibility: hardcoded light-mode colors (amber-200, etc.) may look off in dark theme. Need theme-aware status badges in future.
+- `STATUS_COLORS` is duplicated between ProductCard and ProductDetail. Should be extracted to a shared constants file in future.
 
 ## Lesson de xuat cho Hermes Memory
-- Next.js 16 SSR pages using `cookies()` from `next/headers` are automatically treated as dynamic (ƒ) — no need for `export const dynamic = 'force-dynamic'`
-- Data returned from Supabase JSON column (tags[]) maps cleanly to TypeScript `string[]` when using `as PortalItem[]`
+- `generateMetadata` in Next.js App Router can use async Supabase queries per-page — each page generates its own metadata without layout conflicts
+- Custom `not-found.tsx` in a route group `[slug]/` only applies to that dynamic segment, not the parent /products route
 
 ## Buoc tiep theo cho operator
-- Configure Supabase env vars in .env.local, run migration and seed, then verify /products renders items
+- Verify `/products/gia-pha` and `/products/non-existent-slug` (should show 404)
 - Proceed to TASK-045D1: Admin layout and login page
 ---HERMES-REPORT-END---

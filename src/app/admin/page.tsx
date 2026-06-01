@@ -1,8 +1,11 @@
-export default function AdminPage() {
+import { AdminLoginForm } from '@/components/admin/AdminLoginForm'
+
+export const metadata = { title: 'Admin — RongLeo' }
+
+export default function AdminLoginPage() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-      <p className="text-muted-foreground">Manage your portal</p>
+    <div className="min-h-screen flex items-center justify-center bg-muted/20 px-4">
+      <AdminLoginForm />
     </div>
-  );
+  )
 }

@@ -21,11 +21,17 @@ Status: ✅ COMPLETED
 ## TASK-045C3 — Trang /products/[slug]: Chi tiết Sản phẩm
 Status: ✅ COMPLETED
 
+## TASK-045D1 — Admin Login + Middleware Auth
+Status: ✅ COMPLETED
+
 ### Da thuc hien
-- Rewrote products/[slug]/page.tsx: SSR with generateMetadata (title+summary from Supabase), fetches item by slug + public=true, calls notFound() on error/missing
-- Created ProductDetail client component: back button, thumbnail Image, category + status badge, title, summary, tags with Tag icon, description box, conditional CTA (url → "Truy cập" external link / no url → "Hỏi về dự án" mailto), fade-in animation
-- Created not-found.tsx for /products/[slug] route: custom 404 with "Không tìm thấy sản phẩm" message and back link
-- All Button usages adapted to Base UI `render` prop
+- Created API route POST /api/admin/login: validates username/password from env, sets httpOnly cookie `admin_session` (7 day expiry, secure in production)
+- Created API route POST /api/admin/logout: deletes `admin_session` cookie
+- Created middleware.ts: protects all /admin/* routes except /admin, redirects unauthenticated to login page, Edge Runtime safe
+- Rewrote admin/page.tsx: login page with centered AdminLoginForm
+- Created admin/layout.tsx: admin-only layout wrapper with bg-muted/20
+- Created AdminLoginForm: username + password inputs, error display, loading state, redirects to /admin/items on success
+- Created LogoutButton: calls logout API, redirects to /admin
 
 ### Buoc tiep theo
-- TASK-045D1: Admin layout and login page
+- TASK-045D2: Admin items list page with CRUD table
