@@ -6,13 +6,17 @@ Status: ✅ COMPLETED
 ## TASK-045A2 — Supabase Schema + TypeScript Types + Seed Data
 Status: ✅ COMPLETED
 
+## TASK-045B1 — Layout Shell: Header + Footer + Responsive Menu
+Status: ✅ COMPLETED
+
 ### Da thuc hien
-- Created SQL migration for `portal_items` table (supabase/migrations/001_create_portal_items.sql)
-- Updated `src/types/portal.ts` with PortalItem, ItemStatus, ItemCategory types and constants
-- Replaced `src/data/seed.json` with 9 portal items matching new schema
-- Created `scripts/seed.ts` using tsx runner and Supabase admin client
-- Installed `tsx` devDependency and added `seed` script to package.json
-- Build verified successful
+- Created ThemeProvider (src/components/providers/ThemeProvider.tsx) wrapping next-themes
+- Created ThemeToggle (src/components/layout/ThemeToggle.tsx) cycling light → dark → luxury
+- Rebuilt Header with scroll detection (bg blur/shadow at >50px), nav links (Giải pháp, Sản phẩm, Năng lực, Bài viết, Liên hệ), CTA button, Lucide Zap logo
+- Rebuilt MobileMenu as overlay drawer from top with backdrop, close button, nav links, CTA
+- Rebuilt Footer with 3-column grid (brand, links, contact)
+- Updated root layout.tsx with ThemeProvider, Header, Footer wrapping children
+- Used Base UI `render` prop (not Radix `asChild`) for Button anchors
 
 ### Buoc tiep theo
-- TASK-045A3: Setup UI layout shell (Header, Footer, responsive shell)
+- TASK-045C1: Main page hero section and feature showcase
