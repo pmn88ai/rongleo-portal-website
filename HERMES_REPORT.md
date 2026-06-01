@@ -1,38 +1,38 @@
 ---HERMES-REPORT-START---
-RUN_ID: run-20260601-2130-TASK-045A2
-TASK_ID: TASK-045A2
+RUN_ID: run-20260601-2132-TASK-045B1
+TASK_ID: TASK-045B1
 STATUS: completed
-COMMIT: 83b7dae
+COMMIT: 3b05542
 
 ## Da thuc hien
-- Created SQL migration file `supabase/migrations/001_create_portal_items.sql` with table definition, auto-update trigger, and RLS policies (public read + service_role full access)
-- Updated `src/types/portal.ts`: replaced old Product/AdminItem types with PortalItem, ItemStatus, ItemCategory types, insert/update helpers, and const arrays for status/category options
-- Replaced `src/data/seed.json`: from old 2-object sample to 9 real portal items (gia-pha, spatial, land viz, radar, ke-toan, land-viz, sale-assets, workflow-ai, dashboard-doanh-nghiep) across categories AI, GIS, BĐS, Dashboard, etc.
-- Created `scripts/seed.ts`: uses `@supabase/supabase-js` admin client with `SUPABASE_SERVICE_KEY`, upserts seed.json by slug
-- Installed `tsx` devDependency; added `"seed": "tsx scripts/seed.ts"` to package.json scripts
-- Build verified: `npm run build` passes, no TypeScript errors
+- Created src/components/providers/ThemeProvider.tsx wrapping next-themes (attribute="class", defaultTheme="dark", enableSystem)
+- Created src/components/layout/ThemeToggle.tsx cycling 3 themes (light → dark → luxury) with Sun/Moon/Star icons
+- Rebuilt Header (src/components/layout/Header.tsx): sticky top, scroll detection (>50px adds bg-background/80 backdrop-blur-md shadow-sm border-b), logo with Zap icon, 5 nav links (Giải pháp, Sản phẩm, Năng lực, Bài viết, Liên hệ), CTA button "Trao đổi dự án" mailto, ThemeToggle, hamburger for mobile
+- Rebuilt MobileMenu (src/components/layout/MobileMenu.tsx): fixed inset overlay with backdrop, drawer from top with rounded bottom, nav links with border separator, CTA button, body scroll lock when open
+- Rebuilt Footer (src/components/layout/Footer.tsx): 3-column grid (brand tagline / links / contact), copyright bar with moto
+- Updated root layout.tsx: integrates ThemeProvider > div.flex-col > Header + main.flex-1 + Footer
+- Fixed Base UI render prop usage (shadcn/ui v4 uses @base-ui/react, not Radix asChild)
 
 ## Files thay doi
-- supabase/migrations/001_create_portal_items.sql - new, SQL migration for portal_items table
-- src/types/portal.ts - replaced old types with PortalItem schema matching the DB table
-- src/data/seed.json - replaced with 9 real portal items
-- scripts/seed.ts - new, seed script using tsx + Supabase admin client
-- package.json - added "seed" script entry
-- package-lock.json - updated (tsx dep)
-- PROGRESS.md - updated with A2 status and next step
+- src/components/providers/ThemeProvider.tsx - new
+- src/components/layout/ThemeToggle.tsx - new
+- src/components/layout/Header.tsx - rewritten with scroll detection, nav, CTA
+- src/components/layout/MobileMenu.tsx - rewritten as drawer overlay
+- src/components/layout/Footer.tsx - rewritten with 3-column grid
+- src/app/layout.tsx - updated with ThemeProvider, Header, Footer
+- PROGRESS.md - updated
 
 ## Van de phat sinh
-- None
+- Base UI (shadcn/ui v4) uses `render` prop instead of Radix's `asChild` for polymorphic components — fixed in Header.tsx:20 and MobileMenu.tsx:28
 
 ## Technical debt
-- seed.json is a flat array now (not nested under products/items), matching the upsert payload for portal_items table. The old format was from A1 template scaffolding — no longer needed.
+- Luxury theme has no CSS definition yet — ThemeToggle cycles to it but it currently falls back to dark. Need to add `.luxury` CSS variables in globals.css later.
 
 ## Lesson de xuat cho Hermes Memory
-- seed.json structure must match the upsert payload (flat array of records), not nested by table name
-- tsx is needed for running TypeScript scripts outside Next.js build pipeline — remember to add `"seed": "tsx scripts/seed.ts"` as a standard pattern
+- shadcn/ui v4 uses `@base-ui/react` not `@radix-ui/react-slot` — Button polymorphic rendering uses `render={<Comp />}` prop, not `asChild`
+- Base UI `render` prop accepts a ReactElement, not `asChild={true}` pattern
 
 ## Buoc tiep theo cho operator
-- Run SQL migration `supabase/migrations/001_create_portal_items.sql` in Supabase SQL Editor
-- Run `npm run seed` to populate 9 portal items (requires valid `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_KEY` in .env.local)
-- Proceed to TASK-045A3: Setup UI layout shell (Header, Footer, responsive shell)
+- Verify header/footer appearance at desktop and mobile widths
+- Proceed to TASK-045C1: Main page hero section and feature showcase
 ---HERMES-REPORT-END---

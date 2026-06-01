@@ -9,14 +9,14 @@ Status: ✅ COMPLETED
 ## TASK-045B1 — Layout Shell: Header + Footer + Responsive Menu
 Status: ✅ COMPLETED
 
+## TASK-045B2 — Theme System: 3 Chế độ + CSS Variables
+Status: ✅ COMPLETED
+
 ### Da thuc hien
-- Created ThemeProvider (src/components/providers/ThemeProvider.tsx) wrapping next-themes
-- Created ThemeToggle (src/components/layout/ThemeToggle.tsx) cycling light → dark → luxury
-- Rebuilt Header with scroll detection (bg blur/shadow at >50px), nav links (Giải pháp, Sản phẩm, Năng lực, Bài viết, Liên hệ), CTA button, Lucide Zap logo
-- Rebuilt MobileMenu as overlay drawer from top with backdrop, close button, nav links, CTA
-- Rebuilt Footer with 3-column grid (brand, links, contact)
-- Updated root layout.tsx with ThemeProvider, Header, Footer wrapping children
-- Used Base UI `render` prop (not Radix `asChild`) for Button anchors
+- Updated ThemeProvider: attribute="data-theme", themes={light,dark,luxury}, enableSystem=false, storageKey="rongleo-theme"
+- Rewrote globals.css: replaced oklch shadcn defaults with 3 HSL-based theme blocks (:root light, [data-theme="dark"], [data-theme="luxury"]), adapted @theme block to wrap CSS vars with hsl(), updated dark variant for data-theme attribute, added luxury button accent style
+- layout.tsx already has suppressHydrationWarning (from B1)
+- Build verified successful
 
 ### Buoc tiep theo
 - TASK-045C1: Main page hero section and feature showcase

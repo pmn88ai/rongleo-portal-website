@@ -5,10 +5,11 @@ import { ThemeProvider as NextThemesProvider } from 'next-themes'
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   return (
     <NextThemesProvider
-      attribute="class"
-      defaultTheme="dark"
-      enableSystem
-      disableTransitionOnChange
+      attribute="data-theme"
+      defaultTheme="light"
+      themes={['light', 'dark', 'luxury']}
+      enableSystem={false}
+      storageKey="rongleo-theme"
     >
       {children}
     </NextThemesProvider>
