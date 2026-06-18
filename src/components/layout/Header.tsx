@@ -8,11 +8,11 @@ import { MobileMenu } from './MobileMenu'
 import { ThemeToggle } from './ThemeToggle'
 
 const NAV_LINKS = [
-  { label: 'Giải pháp', href: '/#solutions' },
-  { label: 'Sản phẩm', href: '/products' },
-  { label: 'Năng lực', href: '/#capabilities' },
-  { label: 'Bài viết', href: '#' },
-  { label: 'Liên hệ', href: '/#contact' },
+  { label: 'Tôi là ai',  href: '/#toi-la-ai' },
+  { label: 'Năng lực',   href: '/#nang-luc' },
+  { label: 'Sản phẩm',  href: '/#san-pham' },
+  { label: 'Bài viết',  href: '/#bai-viet' },
+  { label: 'Liên hệ',   href: '/#lien-he' },
 ]
 
 export function Header() {
@@ -53,7 +53,7 @@ export function Header() {
 
           <div className="flex items-center gap-3">
             <ThemeToggle />
-            <Button size="sm" className="hidden md:flex" render={<a href="mailto:admin@rongleo.com" />}>
+            <Button size="sm" className="hidden md:flex" render={<a href="mailto:phamminhnhat@rongleo.com" />}>
               Trao đổi dự án
             </Button>
             <button

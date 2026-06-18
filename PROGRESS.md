@@ -1,4 +1,4 @@
-# Progress
+# Progress — RongLeo Portal
 
 ## TASK-045A1 — Init Project + Supabase Client + .env
 Status: ✅ COMPLETED
@@ -33,14 +33,56 @@ Status: ✅ COMPLETED
 ## TASK-045D4 — Admin Delete + Inline Toggles
 Status: ✅ COMPLETED
 
-### Da thuc hien
-- Added POST method to /api/admin/items/route.ts: inserts new item, returns 201
-- Created /api/admin/items/[id]/route.ts: PATCH handler updates item by UUID
-- Rewrote admin/items/new/page.tsx: SSR with cookie auth check + ItemForm(mode="create")
-- Rewrote admin/items/[id]/edit/page.tsx: SSR with cookie auth + Supabase fetch by id + ItemForm(mode="edit", item=data), notFound() if missing
-- Created ItemForm shared component: all fields (title auto-slug, slug, URL, category Select, status Select, summary/description textareas, thumbnail URL, comma-separated tags, sort_order number, public/featured Switches), auto-generates slug from Vietnamese title (NFD normalize, đ→d), saves via fetch to API, redirects to /admin/items on success
-- Added DELETE to /api/admin/items/[id]/route.ts: removes item by UUID
-- Rewrote AdminItemsClient: inline toggle featured/public + delete with confirm dialog, optimistic UI updates on all actions, stats cards reflect current state after delete
+---
 
-### Buoc tiep theo
-- TASK-045E1: User-facing features or polish (per PROGRESS.md chain)
+## TASK-045E — Personal Brand Hub (2026-06-18) 🔄 IN PROGRESS
+
+Mục tiêu: Biến rongleo.com từ product portal thành personal brand hub 4 tầng.
+Định vị: Phạm Minh Nhật / RongLeo — Senior Land Development & Legal Manager.
+Thông điệp lõi: "Dữ liệu, bản đồ, quy trình và kinh nghiệm thực địa → công cụ hành động."
+
+### Sub-tasks
+
+| Task | Mô tả | Status |
+|------|-------|--------|
+| TASK-045E1 | Header nav anchors (#toi-la-ai → #lien-he) + default theme luxury | ⏳ PENDING |
+| TASK-045E2 | Seed 11 sản phẩm thật vào Supabase (xóa data mẫu cũ) | ⏳ PENDING |
+| TASK-045F1 | TẦNG 1: HeroSection → Personal About (PMN, 15+ năm, 3 CTAs, tải CV) | ⏳ PENDING |
+| TASK-045F2 | TẦNG 2: CapabilitiesSection → Capability Map 6 nhóm | ⏳ PENDING |
+| TASK-045G1 | TẦNG 3: HomepageProductsSection (6 featured từ Supabase) | ⏳ PENDING |
+| TASK-045G2 | Articles static data (articles.ts) + /thinking + /thinking/[slug] | ⏳ PENDING |
+| TASK-045G3 | TẦNG 4: HomepageThinkingSection (3 bài nổi bật) | ⏳ PENDING |
+| TASK-045H1 | Footer + ContactSection update (email thật, CTA rõ) | ⏳ PENDING |
+| TASK-045H2 | Wire page.tsx + smooth scroll (task cuối, phụ thuộc tất cả trên) | ⏳ PENDING |
+
+### Thứ tự chạy đề xuất
+```
+E1 → E2 → F1 → F2 → G1 (sau E2) → G2 → G3 (sau G2) → H1 → H2 (cuối cùng)
+```
+
+### Constraints
+- Không phá admin/products
+- Không đổi DB schema
+- Không làm contact form
+- Không làm blog CMS
+- CV: `public/files/Pham-Minh-Nhat-CV.pdf` (operator đặt file thủ công)
+
+### Files mới cần tạo
+- `src/data/articles.ts`
+- `src/components/portal/HomepageProductsSection.tsx`
+- `src/components/portal/HomepageThinkingSection.tsx`
+- `src/app/thinking/page.tsx`
+- `src/app/thinking/[slug]/page.tsx`
+- `public/files/` (folder, CV do operator đặt vào)
+
+### Files cần sửa
+- `src/components/layout/Header.tsx`
+- `src/components/providers/ThemeProvider.tsx`
+- `src/components/portal/HeroSection.tsx`
+- `src/components/portal/CapabilitiesSection.tsx`
+- `src/components/layout/Footer.tsx`
+- `src/components/portal/ContactSection.tsx`
+- `src/app/page.tsx`
+- `src/app/globals.css`
+- `src/data/seed.json`
+- `scripts/seed.ts`
