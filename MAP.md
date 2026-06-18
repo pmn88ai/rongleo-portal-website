@@ -18,23 +18,30 @@ rongleo-portal/
 │       └── 001_create_portal_items.sql   # Schema: bảng portal_items
 │
 ├── scripts/
-│   └── seed.ts               # Seed 9 item mẫu (chạy: npm run seed)
+│   └── seed.ts               # Seed 13 sản phẩm thật (chạy: npm run seed)
 │
-├── public/                   # Static assets
+├── public/
+│   └── files/
+│       └── Pham-Minh-Nhat-CV.pdf         # CV — operator đặt thủ công
 │
 └── src/
     │
     ├── middleware.ts          # Edge Runtime — bảo vệ /admin/* (trừ /admin)
     │
     ├── app/                  # App Router (Next.js 16)
-    │   ├── globals.css       # 3 theme (light/dark/luxury) + @theme inline
+    │   ├── globals.css       # 3 theme (light/dark/luxury) + scroll-behavior: smooth
     │   ├── layout.tsx        # Root layout: fonts, ThemeProvider, Header, Footer
-    │   ├── page.tsx          # Trang chủ: Hero + Capabilities + Contact
+    │   ├── page.tsx          # Trang chủ: 4 tầng (Hero → Capabilities → Products → Thinking → Contact)
     │   │
     │   ├── products/
     │   │   ├── page.tsx      # /products — Grid sản phẩm + lọc danh mục (SSR)
     │   │   └── [slug]/
     │   │       └── page.tsx  # /products/:slug — Chi tiết sản phẩm (SSR)
+    │   │
+    │   ├── thinking/
+    │   │   ├── page.tsx      # /thinking — Danh sách bài viết (static data)
+    │   │   └── [slug]/
+    │   │       └── page.tsx  # /thinking/:slug — Chi tiết bài viết (generateStaticParams)
     │   │
     │   ├── admin/
     │   │   ├── page.tsx      # /admin — Form đăng nhập
@@ -49,35 +56,34 @@ rongleo-portal/
     │   │
     │   └── api/
     │       └── admin/
-    │           ├── login/
-    │           │   └── route.ts        # POST — xác thực, set cookie
-    │           ├── logout/
-    │           │   └── route.ts        # POST — clear cookie
-    │           ├── items/
-    │           │   ├── route.ts        # GET (list) + POST (create)
-    │           │   └── [id]/
-    │           │       └── route.ts    # PATCH (update) + DELETE
+    │           ├── login/route.ts      # POST — xác thực, set cookie
+    │           ├── logout/route.ts     # POST — clear cookie
+    │           └── items/
+    │               ├── route.ts        # GET (list) + POST (create)
+    │               └── [id]/route.ts   # PATCH (update) + DELETE
     │
     ├── components/
     │   ├── ui/               # shadcn/ui components (Button, Badge, Select, …)
     │   │
     │   ├── layout/           # Layout chung
-    │   │   ├── Header.tsx           # Header: logo, nav, theme toggle
-    │   │   ├── MobileMenu.tsx       # Drawer menu mobile
-    │   │   ├── Footer.tsx           # Footer 3 cột
+    │   │   ├── Header.tsx           # Sticky header: logo, nav anchors, ThemeToggle, CTA
+    │   │   ├── MobileMenu.tsx       # Drawer menu mobile (slide từ trên)
+    │   │   ├── Footer.tsx           # Footer 3 cột: brand / điều hướng / lĩnh vực
     │   │   └── ThemeToggle.tsx      # Nút chuyển theme (light/dark/luxury)
     │   │
     │   ├── providers/
-    │   │   └── ThemeProvider.tsx     # next-themes: 3 theme, data-theme attribute
+    │   │   └── ThemeProvider.tsx     # next-themes: defaultTheme="luxury", data-theme attribute
     │   │
     │   ├── portal/           # UI trang public
-    │   │   ├── HeroSection.tsx       # Hero fade-in + 2 CTA
-    │   │   ├── CapabilitiesSection.tsx # 4 card năng lực (stagger animation)
-    │   │   ├── ContactSection.tsx    # Contact CTA
-    │   │   ├── CategoryFilter.tsx    # Lọc danh mục (client component)
-    │   │   ├── ProductCard.tsx       # Card sản phẩm (status, thumbnail, tags)
-    │   │   ├── ProductsClient.tsx    # Client wrapper cho /products
-    │   │   └── ProductDetail.tsx     # Chi tiết sản phẩm
+    │   │   ├── HeroSection.tsx            # TẦNG 1 — PMN hero: tên, tag, lead text, 3 CTA
+    │   │   ├── CapabilitiesSection.tsx    # TẦNG 2 — Capability Map 6 nhóm năng lực
+    │   │   ├── HomepageProductsSection.tsx # TẦNG 3 — 6 sản phẩm featured từ Supabase
+    │   │   ├── HomepageThinkingSection.tsx # TẦNG 4 — 3 bài viết nổi bật từ articles.ts
+    │   │   ├── ContactSection.tsx         # TẦNG 5 — CTA liên hệ + email + Tải CV
+    │   │   ├── CategoryFilter.tsx         # Lọc danh mục (client component)
+    │   │   ├── ProductCard.tsx            # Card sản phẩm (status, thumbnail, tags)
+    │   │   ├── ProductsClient.tsx         # Client wrapper cho /products
+    │   │   └── ProductDetail.tsx          # Chi tiết sản phẩm
     │   │
     │   └── admin/            # UI trang admin
     │       ├── AdminHeader.tsx       # Thanh header admin (breadcrumb + actions)
@@ -87,22 +93,28 @@ rongleo-portal/
     │       └── LogoutButton.tsx      # Nút đăng xuất
     │
     ├── data/
-    │   └── seed.json         # Dữ liệu seed (9 items)
+    │   ├── seed.json         # 13 sản phẩm thật của RongLeo
+    │   └── articles.ts       # 6 bài viết tĩnh (Article type + helpers)
     │
     ├── lib/
     │   ├── supabase/
     │   │   ├── client.ts    # Supabase browser client (anon key)
-    │   │   └── server.ts    # Supabase server client (service key)
+    │   │   └── server.ts    # Supabase server client (anon key + cookies)
     │   └── utils.ts         # cn() helper (tailwind-merge + clsx)
     │
     └── types/
-        └── portal.ts        # PortalItem & types (ItemStatus, ItemCategory)
+        └── portal.ts        # PortalItem, ItemStatus, ItemCategory, PortalItemInsert
 ```
 
 ## Ghi chú kiến trúc
 
-- **3 Theme**: CSS variables trong `globals.css`, mỗi theme định nghĩa bảng màu HSL riêng. `next-themes` quản lý class `data-theme` trên `<html>`.
+- **4 tầng homepage**: `id="toi-la-ai"` → `id="nang-luc"` → `id="san-pham"` → `id="bai-viet"` → `id="lien-he"`. Nav dùng anchor links.
+- **3 Theme**: CSS variables trong `globals.css`, mỗi theme định nghĩa bảng màu HSL riêng. `next-themes` quản lý class `data-theme` trên `<html>`. Default: `luxury`.
 - **Middleware**: Chạy trên Edge Runtime, không import Node.js modules. Chỉ kiểm tra cookie `admin_session`.
 - **Admin API**: Dùng `SUPABASE_SERVICE_KEY` để bypass RLS. Xác thực bằng `checkAuth()` đọc cookie từ header.
 - **Auto-slug**: Chuẩn hoá tiếng Việt (NFD + `đ→d` + loại ký tự đặc biệt) trong ItemForm.
 - **Optimistic UI**: AdminItemsClient cập nhật state ngay lập tức, rollback nếu API fail.
+- **Articles**: Static data trong `src/data/articles.ts` — không cần DB, không cần admin. Thêm bài = thêm object vào array.
+- **Button render prop**: Tất cả `<Button render={<a>}>` phải có `nativeButton={false}` (Base UI requirement).
+- **CV**: Đặt file tại `public/files/Pham-Minh-Nhat-CV.pdf` — link trỏ `/files/Pham-Minh-Nhat-CV.pdf`.
+- **Supabase products**: Homepage query `featured=true AND public=true LIMIT 6`. Trang `/products` query `public=true` toàn bộ.

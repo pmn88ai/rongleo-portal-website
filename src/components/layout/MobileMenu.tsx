@@ -40,7 +40,7 @@ export function MobileMenu({ open, onClose, links }: MobileMenuProps) {
             </Link>
           ))}
         </nav>
-        <Button className="w-full mt-6" render={<a href="mailto:admin@rongleo.com" />}>
+        <Button className="w-full mt-6" nativeButton={false} render={<a href="mailto:phamminhnhat@rongleo.com" />}>
           Trao đổi dự án
         </Button>
       </div>

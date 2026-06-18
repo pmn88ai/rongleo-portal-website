@@ -28,7 +28,7 @@ export function ContactSection() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" className="rounded-2xl px-8" render={<a href="mailto:phamminhnhat@rongleo.com" />}>
+            <Button size="lg" className="rounded-2xl px-8" nativeButton={false} render={<a href="mailto:phamminhnhat@rongleo.com" />}>
               <Mail className="mr-2 h-4 w-4" />
               Gửi email &rarr;
             </Button>
@@ -36,6 +36,7 @@ export function ContactSection() {
               size="lg"
               variant="outline"
               className="rounded-2xl px-8"
+              nativeButton={false}
               render={<a href="/files/Pham-Minh-Nhat-CV.pdf" target="_blank" rel="noopener noreferrer" />}
             >
               <FileText className="mr-2 h-4 w-4" />

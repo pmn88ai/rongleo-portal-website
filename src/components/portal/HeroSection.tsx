@@ -77,14 +77,14 @@ export function HeroSection() {
               variants={item}
               className="mt-10 flex flex-col sm:flex-row items-start gap-4"
             >
-              <Button variant="outline" className="rounded-2xl px-6" render={<Link href="/#nang-luc" />}>
+              <Button variant="outline" className="rounded-2xl px-6" nativeButton={false} render={<Link href="/#nang-luc" />}>
                 Xem năng lực
               </Button>
-              <Button variant="secondary" className="rounded-2xl px-6" render={<Link href="/#san-pham" />}>
+              <Button variant="secondary" className="rounded-2xl px-6" nativeButton={false} render={<Link href="/#san-pham" />}>
                 Xem sản phẩm số
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-              <Button className="rounded-2xl px-6" render={<a href="/files/Pham-Minh-Nhat-CV.pdf" target="_blank" rel="noopener noreferrer" />}>
+              <Button className="rounded-2xl px-6" nativeButton={false} render={<a href="/files/Pham-Minh-Nhat-CV.pdf" target="_blank" rel="noopener noreferrer" />}>
                 <FileText className="mr-2 h-4 w-4" />
                 Tải CV
               </Button>

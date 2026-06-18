@@ -53,7 +53,7 @@ export function Header() {
 
           <div className="flex items-center gap-3">
             <ThemeToggle />
-            <Button size="sm" className="hidden md:flex" render={<a href="mailto:phamminhnhat@rongleo.com" />}>
+            <Button size="sm" className="hidden md:flex" nativeButton={false} render={<a href="mailto:phamminhnhat@rongleo.com" />}>
               Trao đổi dự án
             </Button>
             <button
