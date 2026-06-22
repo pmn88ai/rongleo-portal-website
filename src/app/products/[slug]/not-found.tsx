@@ -8,7 +8,7 @@ export default function NotFound() {
       <p className="text-muted-foreground mb-6">
         Sản phẩm này không tồn tại hoặc đã bị ẩn.
       </p>
-      <Button className="rounded-2xl" render={<Link href="/products" />}>
+      <Button className="rounded-2xl" nativeButton={false} render={<Link href="/products" />}>
         Quay lại danh sách
       </Button>
     </div>

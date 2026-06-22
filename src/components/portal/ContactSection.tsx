@@ -37,10 +37,10 @@ export function ContactSection() {
               variant="outline"
               className="rounded-2xl px-8"
               nativeButton={false}
-              render={<a href="/files/Pham-Minh-Nhat-CV.pdf" target="_blank" rel="noopener noreferrer" />}
+              render={<a href="/files/CV_PhamMinhNhat.html" target="_blank" rel="noopener noreferrer" />}
             >
               <FileText className="mr-2 h-4 w-4" />
-              Tải CV
+              Xem CV
             </Button>
           </div>
         </motion.div>

@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { ProductsClient } from '@/components/portal/ProductsClient'
+import { STATIC_PRODUCTS } from '@/data/staticProducts'
 import type { PortalItem } from '@/types/portal'
 
 export const metadata = {
@@ -8,20 +9,22 @@ export const metadata = {
 }
 
 export default async function ProductsPage() {
-  const supabase = await createClient()
-  const { data, error } = await supabase
-    .from('portal_items')
-    .select('*')
-    .eq('public', true)
-    .order('sort_order', { ascending: true })
+  let items: PortalItem[] = STATIC_PRODUCTS
 
-  if (error) {
-    return (
-      <div className="container mx-auto px-4 py-20 text-center text-muted-foreground">
-        Không thể tải dữ liệu. Vui lòng thử lại sau.
-      </div>
-    )
+  try {
+    const supabase = await createClient()
+    const { data, error } = await supabase
+      .from('portal_items')
+      .select('*')
+      .eq('public', true)
+      .order('sort_order', { ascending: true })
+
+    if (!error && data && data.length > 0) {
+      items = data as PortalItem[]
+    }
+  } catch {
+    // Supabase unavailable — use static fallback
   }
 
-  return <ProductsClient items={data as PortalItem[]} />
+  return <ProductsClient items={items} />
 }

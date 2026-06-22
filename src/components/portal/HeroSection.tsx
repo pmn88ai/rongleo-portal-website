@@ -26,7 +26,16 @@ const item = {
 export function HeroSection() {
   return (
     <section id="toi-la-ai" className="relative overflow-hidden pt-24 pb-20 md:pt-32 md:pb-28">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 to-transparent" />
+      {/* Hero background image */}
+      <div className="absolute inset-0 -z-20 overflow-hidden">
+        <img
+          src="/files/hero-bg.jpg"
+          alt=""
+          aria-hidden="true"
+          className="h-full w-full object-cover object-center opacity-20"
+        />
+      </div>
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background/60 via-background/40 to-background/80" />
       <div className="container mx-auto px-4">
         <div className="grid gap-12 lg:grid-cols-[1fr_auto] items-center max-w-6xl mx-auto">
           {/* Left column */}
@@ -84,32 +93,29 @@ export function HeroSection() {
                 Xem sản phẩm số
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-              <Button className="rounded-2xl px-6" nativeButton={false} render={<a href="/files/Pham-Minh-Nhat-CV.pdf" target="_blank" rel="noopener noreferrer" />}>
+              <Button className="rounded-2xl px-6" nativeButton={false} render={<a href="/files/CV_PhamMinhNhat.html" target="_blank" rel="noopener noreferrer" />}>
                 <FileText className="mr-2 h-4 w-4" />
-                Tải CV
+                Xem CV
               </Button>
             </motion.div>
           </motion.div>
 
-          {/* Right column — decorative */}
+          {/* Right column — photo */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="hidden lg:flex flex-shrink-0 w-72 h-80 items-center justify-center"
+            className="hidden lg:flex flex-shrink-0 w-64 items-center justify-center"
           >
-            <div className="relative w-full h-full">
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/20 via-primary/10 to-transparent" />
-              <div className="absolute inset-4 rounded-2xl border border-primary/20 bg-background/60 backdrop-blur-sm" />
-              <div className="absolute inset-6 rounded-xl opacity-20"
-                style={{
-                  backgroundImage: 'linear-gradient(var(--primary) 1px, transparent 1px), linear-gradient(90deg, var(--primary) 1px, transparent 1px)',
-                  backgroundSize: '24px 24px',
-                }}
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-8xl font-bold text-primary/10 select-none">RL</span>
+            <div className="relative">
+              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-primary/40 to-primary/10 blur-md" />
+              <div className="relative w-64 h-72 rounded-3xl overflow-hidden border border-primary/30 shadow-2xl">
+                <img
+                  src="/files/avatar.jpg"
+                  alt="Phạm Minh Nhật"
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
             </div>
           </motion.div>

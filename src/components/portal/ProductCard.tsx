@@ -39,11 +39,6 @@ export function ProductCard({ item, featured }: ProductCardProps) {
             </span>
           </div>
         )}
-        <div className="absolute top-3 right-3">
-          <span className={`text-xs font-medium px-2.5 py-1 rounded-full border ${STATUS_COLORS[item.status] ?? STATUS_COLORS['Đang phát triển']}`}>
-            {item.status}
-          </span>
-        </div>
       </div>
 
       <div className="p-5 flex flex-col flex-1">
@@ -64,12 +59,12 @@ export function ProductCard({ item, featured }: ProductCardProps) {
         )}
 
         <div className="flex items-center gap-2 mt-auto">
-          <Button variant="outline" size="sm" className="flex-1 rounded-xl" render={<Link href={`/products/${item.slug}`} />}>
+          <Button variant="outline" size="sm" className="flex-1 rounded-xl" nativeButton={false} render={<Link href={`/products/${item.slug}`} />}>
             Xem chi tiết
             <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
           </Button>
           {item.url && (
-            <Button variant="ghost" size="icon" className="rounded-xl flex-shrink-0" render={<a href={item.url} target="_blank" rel="noopener noreferrer" aria-label="Mở link ngoài" />}>
+            <Button variant="ghost" size="icon" className="rounded-xl flex-shrink-0" nativeButton={false} render={<a href={item.url} target="_blank" rel="noopener noreferrer" aria-label="Mở link ngoài" />}>
               <ExternalLink className="h-4 w-4" />
             </Button>
           )}

@@ -24,11 +24,12 @@ Trang thương hiệu cá nhân của **Phạm Minh Nhật / RongLeo** — giớ
 ## Tính năng
 
 ### Public
-- **4 tầng homepage** — Hero (Tôi là ai) → Capability Map (Tôi làm được gì) → Sản phẩm số (Tôi đã xây gì) → Bài viết & Hành trình
+- **5 tầng homepage** — Hero (Tôi là ai) → Capability Map (Tôi làm được gì) → Sản phẩm số (Tôi đã xây gì) → Bài viết & Hành trình → Liên hệ
 - **3 Theme** — Light (xanh lá), Dark (xanh neon), Luxury (vàng đồng). Default: luxury. Lưu bằng `localStorage`.
 - **Navigation anchor** — Tôi là ai / Năng lực / Sản phẩm / Bài viết / Liên hệ → scroll mượt đến từng section.
-- **Tải CV** — `/files/Pham-Minh-Nhat-CV.pdf`
-- **Sản phẩm** — `/products` grid đầy đủ + lọc danh mục. Homepage hiện 6 sản phẩm nổi bật.
+- **Hero ảnh** — `avatar.jpg` hiển thị cột phải, `hero-bg.jpg` làm nền mờ 20% opacity.
+- **Xem CV** — Nút mở `/files/CV_PhamMinhNhat.html` trong tab mới (HTML). PDF vẫn có ở `/files/Pham-Minh-Nhat-CV.pdf`.
+- **Sản phẩm** — `/products` grid đầy đủ 12 app + lọc danh mục. Homepage hiện 6 sản phẩm featured. Có static fallback khi Supabase unavailable.
 - **Bài viết** — `/thinking` danh sách + `/thinking/[slug]` chi tiết. Static data, không cần DB.
 
 ### Admin
@@ -45,7 +46,7 @@ npm install
 cp .env.example .env.local
 # Điền biến môi trường vào .env.local
 
-npm run seed      # Seed 13 sản phẩm vào Supabase
+npm run seed      # Seed sản phẩm vào Supabase (tùy chọn — có static fallback)
 npm run dev       # Mở http://localhost:3000
 ```
 
@@ -87,25 +88,26 @@ ON portal_items FOR SELECT
 USING (public = true);
 ```
 
+> **Lưu ý:** Khi Supabase unavailable hoặc trả về rỗng, cả homepage lẫn `/products` tự động dùng static fallback từ `src/data/staticProducts.ts`.
+
 ---
 
-## Sản phẩm (13 items)
+## Sản phẩm (12 items — static fallback)
 
 | # | Tên | Slug | Featured |
 |---|-----|------|----------|
-| 1 | RongLeo Land | `rongleo-land` | ✅ |
+| 1 | RongLeo Company OS | `rongleo-company-os` | ✅ |
 | 2 | RongLeo Spatial | `rongleo-spatial` | ✅ |
-| 3 | RongLeo Sale Assets | `rongleo-sale-assets` | ✅ |
-| 4 | RongLeo Accountant | `rongleo-accountant` | — |
-| 5 | RongLeo Language Companion | `rongleo-language-companion` | ✅ |
-| 6 | RongLeo MindScope | `rongleo-mindscope` | — |
-| 7 | RongLeo FinTrack | `rongleo-fintrack` | — |
-| 8 | RongLeo Land Mapper | `rongleo-land-mapper` | — |
-| 9 | RongLeo FamilyTree | `rongleo-familytree` | — |
-| 10 | TimeLapse Builder | `timelapse-builder` | — |
-| 11 | PhuongLong Flower | `phuonglong-flower` | — |
-| 12 | RongLeo Kids | `rongleo-kids` | — |
-| 13 | RongLeo Company OS | `rongleo-company-os` | ✅ |
+| 3 | RongLeo Language Companion | `rongleo-language-companion` | ✅ |
+| 4 | RongLeo Sale Assets | `rongleo-sale-assets` | ✅ |
+| 5 | RongLeo Media Research Hub | `rongleo-media-research-hub` | ✅ |
+| 6 | RongLeo Weather Economy | `rongleo-weather-economy` | ✅ |
+| 7 | RongLeo Accountant | `rongleo-accountant` | — |
+| 8 | RongLeo MindScope | `rongleo-mindscope` | — |
+| 9 | RongLeo Radar + Data Lake | `rongleo-radar-datalake` | — |
+| 10 | RongLeo Kids | `rongleo-kids` | — |
+| 11 | Phượng Long Flower | `phuonglong-flower` | — |
+| 12 | RongLeo Land | `rongleo-land` | — |
 
 ---
 
@@ -124,13 +126,24 @@ Thêm bài mới: thêm object vào array `ARTICLES` trong `src/data/articles.ts
 
 ---
 
+## Assets cần đặt thủ công
+
+```
+public/
+├── files/
+│   ├── avatar.jpg              ← Ảnh chân dung (tỷ lệ 3:4, mặt ở trên)
+│   ├── hero-bg.jpg             ← Ảnh nền Hero (landscape, hiển thị 20% opacity)
+│   ├── CV_PhamMinhNhat.html    ← CV dạng HTML (mở trong tab mới)
+│   └── Pham-Minh-Nhat-CV.pdf  ← CV dạng PDF (optional, để download)
+└── screenshots/
+    └── [slug].jpg              ← Ảnh chụp màn hình app, tên theo slug
+```
+
+---
+
 ## CV
 
-Đặt file tại: `public/files/Pham-Minh-Nhat-CV.pdf`
-
-URL public: `https://rongleo.com/files/Pham-Minh-Nhat-CV.pdf`
-
-Nút "Tải CV" có ở: Hero Section + Contact Section.
+Nút "Xem CV" ở Hero Section + Contact Section → mở `/files/CV_PhamMinhNhat.html` trong tab mới.
 
 ---
 
@@ -158,19 +171,17 @@ npm run build
 # git push → Vercel auto-deploy
 ```
 
-Sau khi deploy, chạy seed từ local (dùng env vars của production):
-```bash
-NEXT_PUBLIC_SUPABASE_URL=... SUPABASE_SERVICE_KEY=... npm run seed
-```
-
 ---
 
 ## Lưu ý kỹ thuật
 
 - **Button + render prop**: Dùng `nativeButton={false}` khi `Button` render thành `<a>` hoặc `<Link>` (Base UI requirement).
+- **ThemeToggle hydration**: Dùng `mounted` state — tránh SSR/client mismatch với icon (Sun/Moon/Star).
+- **Static fallback**: `src/data/staticProducts.ts` — 12 sản phẩm hardcode, luôn hiển thị kể cả khi Supabase pause.
 - **Supabase paused**: Free tier tự pause sau ~7 ngày không dùng. Resume tại app.supabase.com.
 - **Articles**: Static, không cần DB. Thêm bài = thêm object vào `ARTICLES` array.
 - **Smooth scroll**: `scroll-behavior: smooth` trong `globals.css` — anchor links tự scroll mượt.
+- **ProductCard**: Không hiển thị badge status (Beta/Hoàn thiện) — đã bỏ để giao diện gọn hơn.
 
 ---
 

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { ProductCard } from './ProductCard'
+import { FEATURED_PRODUCTS } from '@/data/staticProducts'
 import type { PortalItem } from '@/types/portal'
 
 export async function HomepageProductsSection() {
@@ -17,11 +18,13 @@ export async function HomepageProductsSection() {
       .order('sort_order', { ascending: true })
       .limit(6)
 
-    if (!error && data) {
+    if (!error && data && data.length > 0) {
       items = data as PortalItem[]
+    } else {
+      items = FEATURED_PRODUCTS
     }
   } catch {
-    // Supabase unavailable — show fallback
+    items = FEATURED_PRODUCTS
   }
 
   return (
